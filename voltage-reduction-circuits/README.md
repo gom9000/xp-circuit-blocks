@@ -10,10 +10,12 @@ No-load condition (without connected load):
 $$V_{out} = \frac{R_2}{R_1 + R_2} \times V_{in}$$
 
 With load applied ($I_{out}$), the network can be modeled using its Thevenin equivalent circuit ($V_{th}, R_{th}$) at the output node:
+
 $$V_{th} = \frac{R_2}{R_1 + R_2} \times V_{in}$$
 $$R_{th} = R_1 \parallel R_2 = \frac{R_1 \times R_2}{R_1 + R_2}$$
 
 The resulting loaded output voltage is:
+
 $$V_{out} = V_{th} - (R_{th} \times I_{out}) = \left( \frac{R_2}{R_1 + R_2} \times V_{in} \right) - \left( \frac{R_1 \times R_2}{R_1 + R_2} \times I_{out} \right)$$
 
 
@@ -22,10 +24,12 @@ Even assuming a perfectly constant load current ($I_{out}$), a wide input voltag
 
 1. **At minimum input voltage ($V_{in_{MIN}}$):** 
    The load current pulls the output below the required minimum:
+
    $$V_{out(V_{in_{MIN}})} = \left( \frac{R_2}{R_1 + R_2} \times V_{in_{MIN}} \right) - \left( \frac{R_1 \times R_2}{R_1 + R_2} \times I_{out} \right) < V_{out_{MIN}}$$
 
 2. **At maximum input voltage ($V_{in_{MAX}}$):** 
    The output scales linearly with the input and exceeds the required maximum:
+   
    $$V_{out(V_{in_{MAX}})} = \left( \frac{R_2}{R_1 + R_2} \times V_{in_{MAX}} \right) - \left( \frac{R_1 \times R_2}{R_1 + R_2} \times I_{out} \right) > V_{out_{MAX}}$$
 
 ### Simulation:
