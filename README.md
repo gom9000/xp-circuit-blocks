@@ -1,6 +1,4 @@
 # Circuit Blocks eXPeriences
-**Type**: Circuit Design | **Status**: Ongoing
-
 A series of lab experiences focused on testing, measuring, and dimensioning fundamental circuit building blocks.
 Each experience acts as a diary of reusable knowledge for standalone projects.
 
