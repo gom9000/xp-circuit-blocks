@@ -29,7 +29,7 @@ Even assuming a perfectly constant load current ($I_{out}$), a wide input voltag
 
 2. **At maximum input voltage ($V_{in_{MAX}}$):** 
    The output scales linearly with the input and exceeds the required maximum:
-   
+
    $$V_{out(V_{in_{MAX}})} = \left( \frac{R_2}{R_1 + R_2} \times V_{in_{MAX}} \right) - \left( \frac{R_1 \times R_2}{R_1 + R_2} \times I_{out} \right) > V_{out_{MAX}}$$
 
 ### Simulation:
@@ -144,7 +144,7 @@ However, pushing the input range higher while maintaining a minimum output volta
 
 ## Notes
 * **On Op-Amp based alternative:** 
-   An op-amp regulator might seem a natural next step. However, standard op-amps cannot operate directly at $V_{in_{MAX}}$​ and require a lower, protected supply to function. This means one of the topologies above (A, B, or C) would be needed just to power the op-amp: a circular dependency that defeats the purpose. A discrete approach remains the only self-contained starting point.
+*"An op-amp regulator is a natural evolution of Topology C, replacing the passive Zener reference with an error amplifier. However, it requires a supply voltage within the op-amp's rated $V_{CC_{max}}$​. When $V_{in_{MAX}}$ exceeds this limit, one of the topologies above would be needed just to power the op-amp itself: a circular dependency. Within that constraint, it remains a valid and superior alternative."*
 
 
 
