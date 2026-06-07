@@ -144,7 +144,7 @@ However, pushing the input range higher while maintaining a minimum output volta
 
 ## Notes
 * **On Op-Amp based alternative:** 
-*"An op-amp regulator is a natural evolution of Topology C, replacing the passive Zener reference with an error amplifier. However, it requires a supply voltage within the op-amp's rated $V_{CC_{max}}$​. When $V_{in_{MAX}}$ exceeds this limit, one of the topologies above would be needed just to power the op-amp itself: a circular dependency. Within that constraint, it remains a valid and superior alternative."*
+*"An op-amp regulator is a natural evolution of Topology C, replacing the passive Zener reference with an error amplifier. However, it requires a supply voltage within the op-amp's rated* $V_{CC_{max}}$​. *When* $V_{in_{MAX}}$ *exceeds this limit, one of the topologies above would be needed just to power the op-amp itself: a circular dependency. Within that constraint, it remains a valid and superior alternative."*
 
 
 
