@@ -1,5 +1,8 @@
 # Voltage reduction circuits
-Analyze and dimension various circuit topologies designed to reduce a high supply voltage $V_{in}$, variable between $V_{in_{MIN}}$ and $V_{in_{MAX}}$, to a lower value between $V_{out_{MIN}}$ and $V_{out_{MAX}}$, in order to power a known fixed load (e.g., a linear regulator or a logic stage drawing a constant current $I_{out}$).
+Part of the **[xp-circuit-blocks](..)** collection: practical notes about reusable circuit building blocks.
+
+**Objective**:
+Evaluate various circuit topologies designed to reduce a high supply voltage $V_{in}$, variable between $V_{in_{MIN}}$ and $V_{in_{MAX}}$, to a lower value between $V_{out_{MIN}}$ and $V_{out_{MAX}}$, in order to power a known fixed load (e.g., a linear regulator or a logic stage drawing a constant current $I_{out}$).
 
 
 ## Topology A: Resistive Voltage Divider
@@ -85,7 +88,7 @@ The simulation plot distinguishes two operational zones:
 
 ### Conclusions:
 The output is locked to $V_Z$, keeping it within $[V_{out_{MIN}}, V_{out_{MAX}}]$. However, as $V_{in}$ rises the total input current increases. Since the load draws a fixed current, the Zener diode is forced to shunt the entire excess current.<br/>
-Sizing the circuit to prevent load starvation at $V_{in_{MIN}}$ may trigger a thermal runaway scenario at $V_{in_{MAX}}$, forcing the passive and shunt components to handle massive thermal dissipation.
+Sizing the circuit to prevent load starvation at $V_{in_{MIN}}$ may trigger a thermal overstress scenario at $V_{in_{MAX}}$, forcing the passive and shunt components to handle massive thermal dissipation.
 
 
 
