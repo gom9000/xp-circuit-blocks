@@ -47,8 +47,7 @@ drops below zero. In a real circuit the load would simply starve or shut down.
 
 
 ### Conclusions:
-The plot shows that $V_{out}$ remains below $V_{out_{MIN}}$ for most of the input sweep, and crosses into the target window only at higher input voltages.
-$V_{out}$ tracks both $V_{in}$ variations and load current changes. Any input swing between $V_{in_{MIN}}$ and $V_{in_{MAX}}$ inevitably drives the output outside the target boundaries $[V_{out_{MIN}}, V_{out_{MAX}}]$.
+The divider cannot keep the output within the required voltage window over the specified input range. Output voltage remains dependent on both input voltage and load current.
 
 
 
@@ -72,7 +71,7 @@ This leads to severe thermal stress at $V_{in_{MAX}}$:
 * **Zener Dissipation:** $P_{Z_{max}} = V_Z \times I_{Z(max)}$
 
 ### Simulation:
-The circuit was validated via LTspice using a DC Sweep ($V_{in} = 10\text{V} \div 50\text{V}$) with a fixed target window $[V_{out_{MIN}}, V_{out_{MAX}}] = [5\text{V}, 20\text{V}]$ and a $12\text{V}$ Zener diode, which sits ideally at the center of the target range. The load is modeled as a constant current load $I_{out} = 20\text{mA}$.<br/>
+The circuit was validated via LTspice using a DC Sweep ($V_{in} = 10\text{V} \div 50\text{V}$) with a fixed target window $[V_{out_{MIN}}, V_{out_{MAX}}] = [5\text{V}, 20\text{V}]$ and a $12\text{V}$ Zener diode as reference (which sits at the center of the target range). The load is modeled as a constant current load $I_{out} = 20\text{mA}$.<br/>
 To guarantee that the output remains above $V_{out_{MIN}}$ even at the lowest input voltage, the series resistor $R_S$ was dimensioned at $220\,\Omega$.
 
 ![circuit](topology_B_circuit.png)
@@ -145,9 +144,10 @@ However, pushing the input range higher while maintaining a minimum output volta
 
 
 ## Notes
-* **On Op-Amp based alternative:** An op-amp regulator seems a natural evolution of Topology C, replacing the passive Zener reference with an active error amplifier for tighter regulation and better ripple rejection. However, its added value (precision output and dynamic load compensation) lies outside the scope of this experience.<br/>
+* **On Op-Amp based *alternative***: An op-amp regulator seems a natural evolution of Topology C, replacing the passive Zener reference with an active error amplifier for tighter regulation and better ripple rejection. However, its added value (precision output and dynamic load compensation) lies outside the scope of this experience: we are dropping voltage to a target window, not regulating it.<br/>
 An op-amp also requires a supply voltage within its rated $V_{CC_{max}}$. When $V_{in_{MAX}}$ exceeds this limit, one of the topologies above would be needed just to power the op-amp itself, creating a circular dependency.<br/>
-An op-amp stage is therefore better seen as a complement rather than an alternative. In a typical multi-stage architecture, Topology C handles the voltage dropping (pre-regulation), while a cascaded op-amp or integrated linear regulator handles precision regulation.
+An op-amp stage is therefore better seen as a complement rather than an alternative. In a typical multi-stage architecture, Topology C handles the voltage dropping (pre-regulation), while a cascaded op-amp or integrated linear regulator handles precision regulation.<br/>
+*The transistor remains the ideal choice for handling the 'heavy job', while integrated devices are introduced downstream to refine the regulation based on the required precision.*
 
 
 
