@@ -1,5 +1,5 @@
 # Voltage reduction circuits
-Part of the **[xp-circuit-blocks](..)** collection: practical notes about reusable circuit building blocks.
+Part of the **[xp-circuit-blocks](https://github.com/gom9000/xp-circuit-block)** collection: practical notes about reusable circuit building blocks.
 
 **Objective**:
 Evaluate various circuit topologies designed to reduce a high supply voltage $V_{in}$, variable between $V_{in_{MIN}}$ and $V_{in_{MAX}}$, to a lower value between $V_{out_{MIN}}$ and $V_{out_{MAX}}$, in order to power a known fixed load (e.g., a linear regulator or a logic stage drawing a constant current $I_{out}$).
