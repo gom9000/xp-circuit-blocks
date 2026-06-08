@@ -144,10 +144,10 @@ The load current flows directly from $V_{in}$ through the transistor collector. 
 However, pushing the input range higher while maintaining a minimum output voltage at low input forces a larger bias current $I_R$ at $V_{in_{MAX}}$. Thermal stress shifts onto $R_B$ and the pass transistor, both of which require careful sizing.
 
 
-
 ## Notes
-* **On Op-Amp based alternative:** 
-*"An op-amp regulator is a natural evolution of Topology C, replacing the passive Zener reference with an error amplifier. However, it requires a supply voltage within the op-amp's rated* $V_{CC_{max}}$​. *When* $V_{in_{MAX}}$ *exceeds this limit, one of the topologies above would be needed just to power the op-amp itself: a circular dependency. Within that constraint, it remains a valid and superior alternative."*
+* **On Op-Amp based alternative:** An op-amp regulator seems a natural evolution of Topology C, replacing the passive Zener reference with an active error amplifier for tighter regulation and better ripple rejection. However, its added value (precision output and dynamic load compensation) lies outside the scope of this experience.<br/>
+An op-amp also requires a supply voltage within its rated $V_{CC_{max}}$. When $V_{in_{MAX}}$ exceeds this limit, one of the topologies above would be needed just to power the op-amp itself, creating a circular dependency.<br/>
+An op-amp stage is therefore better seen as a complement rather than an alternative. In a typical multi-stage architecture, Topology C handles the voltage dropping (pre-regulation), while a cascaded op-amp or integrated linear regulator handles precision regulation.
 
 
 
