@@ -1,8 +1,12 @@
 # Voltage reduction circuits
 Part of the **[xp-circuit-blocks](https://github.com/gom9000/xp-circuit-blocks)** collection: practical notes about reusable circuit building blocks.
 
+**Background**:
+This experience originated from a real design constraint: a circuit powered from a supply variable between $V_{in_{MIN}}$ and $V_{in_{MAX}}$, depending on the available power source. One internal subsystem, a linear voltage regulator driving a fixed load current $I_{out}$, needed to be decoupled from this wide input swing, requiring a voltage reduction stage between $V_{out_{MIN}}$ and $V_{out_{MAX}}$.
+
 **Objective**:
-Evaluate various circuit topologies designed to reduce a high supply voltage $V_{in}$, variable between $V_{in_{MIN}}$ and $V_{in_{MAX}}$, to a lower value between $V_{out_{MIN}}$ and $V_{out_{MAX}}$, in order to power a known fixed load (e.g., a linear regulator or a logic stage drawing a constant current $I_{out}$).
+Evaluate various circuit topologies for reducing a wide input voltage to a bounded output window suitable for powering a fixed load.
+
 
 
 ## Topology A: Resistive Voltage Divider
@@ -46,8 +50,17 @@ At the beginning of the sweep the simulation plots a negative output voltage. Th
 drops below zero. In a real circuit the load would simply starve or shut down.
 
 
+### Power Dissipation Analysis
+| Component | At $V_{in_{MIN}} = 10\text{V}$ ($V_{out} \approx -8\text{V}$) | At $V_{in_{MAX}} = 50\text{V}$ ($V_{out} \approx 8\text{V}$) |
+| :--- | :--- | :--- |
+| **Resistor $R_1$ ($1.5\text{ k}\Omega$)** | $\approx \mathbf{216\text{mW}}$ | $\approx \mathbf{1.18\text{W}}$ |
+| **Resistor $R_2$ ($1\text{ k}\Omega$)** | $\approx \mathbf{64\text{mW}}$ | $\approx \mathbf{64\text{mW}}$ |
+| **Total Topology Dissipation** | $\approx \mathbf{280\text{mW}}$ | $\approx \mathbf{1.24\text{W}}$ |
+
+
 ### Conclusions:
 The divider cannot keep the output within the required voltage window over the specified input range. Output voltage remains dependent on both input voltage and load current.
+Moreover, as the input voltage increases, the network is forced to dissipate an increasing amount of power. At maximum $V_{in}$, the series resistor may require oversizing, for a circuit that fails to provide any voltage regulation under load.
 
 
 
@@ -85,9 +98,18 @@ The simulation plot distinguishes two operational zones:
 2. **Regulated Zone ($V_{in} \ge 16.4\text{V}$):** The voltage across the load reaches $12\text{V}$, forcing the Zener into breakdown. The output voltage remains clamped at $12\text{V}$ throughout the rest of the sweep.
 
 
+### Power Dissipation Analysis
+| Component | At $V_{in_{MIN}} = 10\text{V}$ (Zener Off, $V_{out} = 5.6\text{V}$) | At $V_{in_{MAX}} = 50\text{V}$ (Zener On, $V_{out} = 12\text{V}$) |
+| :--- | :--- | :--- |
+| **Series Resistor $R_S$ ($220\,\Omega$)** | $\approx \mathbf{88\text{mW}}$ | $\approx \mathbf{6.56\text{W}}$ |
+| **Zener Diode $D_1$ ($12\text{V}$)** | $\mathbf{0\text{mW}}$ | $\approx \mathbf{1.83\text{W}}$ |
+| **Total Topology Dissipation** | $\approx \mathbf{88\text{mW}}$ | $\approx \mathbf{8.39\text{W}}$ |
+
+
 ### Conclusions:
 The output is locked to $V_Z$, keeping it within $[V_{out_{MIN}}, V_{out_{MAX}}]$. However, as $V_{in}$ rises the total input current increases. Since the load draws a fixed current, the Zener diode is forced to shunt the entire excess current.<br/>
-Sizing the circuit to prevent load starvation at $V_{in_{MIN}}$ may trigger a thermal overstress scenario at $V_{in_{MAX}}$, forcing the passive and shunt components to handle massive thermal dissipation.
+Sizing the circuit to prevent load starvation at $V_{in_{MIN}}$ may trigger a thermal overstress scenario at $V_{in_{MAX}}$, forcing the series resistor and diode to handle massive thermal dissipation.<br/>
+Over a wide input range this topology is extremely inefficient (wasting $\approx 8.4\text{W}$ of power to drive a tiny $240\text{mW}$ load).
 
 
 
@@ -125,7 +147,7 @@ Over a wide input range ($V_{in} = V_{in_{MIN}} \div V_{in_{MAX}}$), the design 
    * **Pass Transistor:** $P_{D(Q)} = (V_{in_{MAX}} - V_{out}) \times I_{out}$
 
 ### Simulation:
-The circuit was validated via LTspice using a DC Sweep ($V_{in} = 10\text{V} \div 50\text{V}$) with a target window $[V_{out_{MIN}}, V_{out_{MAX}}] = [5\text{V}, 20\text{V}]$, using a a $12\text{V}$ Zener diode as the transistor base voltage reference. The load is modeled as a constant current load $I_{out} = 20\text{mA}$. To guarantee proper base drive at $V_{in_{MIN}} = 10\text{V}$, the bias resistor $R_b$ was dimensioned at $4.7\text{ k}\Omega$.
+The circuit was validated via LTspice using a DC Sweep ($V_{in} = 10\text{V} \div 50\text{V}$) with a target window $[V_{out_{MIN}}, V_{out_{MAX}}] = [5\text{V}, 20\text{V}]$, using a $12\text{V}$ Zener diode as the transistor base voltage reference. The load is modeled as a constant current load $I_{out} = 20\text{mA}$. To guarantee proper base drive at $V_{in_{MIN}} = 10\text{V}$, the bias resistor $R_b$ was dimensioned at $4.7\text{ k}\Omega$.
 
 ![circuit](topology_C_circuit.png)
 
@@ -138,9 +160,20 @@ The simulation plot distinguishes two operational zones:
 2. **Regulated Zone ($V_{in} \ge 13\text{V}$):** As the input voltage crosses $\approx 13\text{V}$, the Zener diode enters reverse breakdown and clamps the base to $12\text{V}$. The emitter follower architecture tracks this reference, stabilizing $V_{out}$ at $V_Z - V_{BE}$ up to the absolute maximum input.
 
 
+### Power Dissipation Analysis
+| Component | At $V_{in_{MIN}} = 10\text{V}$ (Zener Off, $V_{out} \approx 7.8\text{V}$) | At $V_{in_{MAX}} = 50\text{V}$ (Zener On, $V_{out} \approx 11.3\text{V}$) |
+| :--- | :--- | :--- |
+| **Bias Resistor $R_B$ ($4.7\text{ k}\Omega$)** | $\approx \mathbf{0.5\text{mW}}$ | $\approx \mathbf{307\text{mW}}$ |
+| **Zener Diode $D_1$ ($12\text{V}$)** | $\mathbf{0\text{mW}}$ | $\approx \mathbf{97\text{mW}}$ |
+| **Pass Transistor $Q_1$ (NPN)** | $\approx \mathbf{44\text{mW}}$ | $\approx \mathbf{774\text{mW}}$ |
+| **Total Topology Dissipation** | $\approx \mathbf{44.5\text{mW}}$ | $\approx \mathbf{1.18\text{W}}$ |
+
+
 ### Conclusions:
 The load current flows directly from $V_{in}$ through the transistor collector. Only the small base current $I_B$ flows through $R_{B}$ and the Zener, reducing the power stress on the reference diode compared to Topology B.<br/>
-However, pushing the input range higher while maintaining a minimum output voltage at low input forces a larger bias current $I_R$ at $V_{in_{MAX}}$. Thermal stress shifts onto $R_B$ and the pass transistor, both of which require careful sizing.
+However, pushing the input range higher while maintaining a minimum output voltage at low input forces a larger bias current $I_R$ at $V_{in_{MAX}}$. Thermal stress shifts onto $R_B$ and the pass transistor, both of which require careful sizing.<br/>
+Topology C represents a better approach among the blocks analyzed, shifting thermal dissipation onto a component better optimized for heat dissipation.
+
 
 
 ## Notes
