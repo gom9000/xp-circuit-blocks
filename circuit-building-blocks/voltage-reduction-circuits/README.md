@@ -1,5 +1,5 @@
 # Voltage reduction circuits
-Part of the **[xp-circuit-blocks](https://github.com/gom9000/xp-circuit-blocks)** collection: practical notes about reusable circuit building blocks.
+Part of the **[hardware eXPerience](https://github.com/gom9000/xp-hardware)** collection: reusable engineering knowledges built through practical experimentation.
 
 **Background**:
 This experience originated from a real design constraint: a circuit powered from a supply variable between $V_{in_{MIN}}$ and $V_{in_{MAX}}$, depending on the available power source. One internal subsystem, a linear voltage regulator driving a fixed load current $I_{out}$, needed to be decoupled from this wide input swing, requiring a voltage reduction stage between $V_{out_{MIN}}$ and $V_{out_{MAX}}$.
