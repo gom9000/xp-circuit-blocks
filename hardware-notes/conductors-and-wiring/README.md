@@ -1,5 +1,5 @@
 # Conductors & Wiring
-Part of the **[hardware-notes](https://github.com/gom9000/hardware-notes)** collection: practical notes about hardware calculations and development.
+Part of the **[hardware eXPerience](https://github.com/gom9000/xp-hardware)** collection: reusable engineering knowledges built through practical experimentation.
 
 ## Background
 When prototyping on stripboards or perforated PCBs, it is customary for hobbyists to use surplus component leads (typically resistors and diodes) as conductors. These leads conveniently come mainly in two recurring diameters, $0.5\text{mm}$ and $0.8\text{mm}$, which this document treats as the two reference gauges. These notes document the practical design rules and wire gauge choices adopted to ensure low voltage drops and structural reliability under load when using these leads.
